@@ -4,3 +4,4 @@ pymongo
 bcrypt
 pyjwt
 certifi
+gunicorn
