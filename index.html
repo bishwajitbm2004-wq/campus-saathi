@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Campus साथी</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SIGNUP PAGE -->
+<div id="SP" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0f1f3d 0%,#1a3560 50%,#0d2137 100%);align-items:center;justify-content:center;z-index:9998;overflow-y:auto;">
+  <div class="login-card" style="margin:2rem auto;">
+    <img src="logo.png2.jpeg" alt="Campus साथी" style="height:60px;width:auto;margin-bottom:0.5rem;mix-blend-mode:screen;"/>
+    <h2 style="font-family:'Playfair Display',serif;color:#0f1f3d;font-size:1.6rem;margin-bottom:0.2rem;">Create Account</h2>
+    <p style="color:#888;font-size:0.82rem;margin-bottom:1.2rem;">Join Campus साथी today!</p>
+
+    <div id="SE" style="display:none;background:#fde8e6;color:#c0392b;padding:0.65rem;border-radius:10px;font-size:0.85rem;margin-bottom:1rem;">❌ <span id="SE-msg">Error</span></div>
+    <div id="SS" style="display:none;background:#e6faf0;color:#1a7a45;padding:0.65rem;border-radius:10px;font-size:0.85rem;margin-bottom:1rem;"></div>
+
+    <div class="role-btns">
+      <button id="sbS" class="role-btn active-role" onclick="setSignupRole('student')">🎒 Student</button>
+      <button id="sbP" class="role-btn" onclick="setSignupRole('professor')">👨‍🏫 Professor</button>
+    </div>
+
+    <input id="s-name"    class="login-input" type="text"     placeholder="Full Name"/>
+   <select id="s-gender" class="login-input">
+  <option value="">Select Gender</option>
+  <option value="male">Male</option>
+  <option value="female">Female</option>
+  <option value="other">Other</option>
+</select>
+    <input id="s-college" class="login-input" type="text"     placeholder="College Name"/>
+    <input id="s-id"      class="login-input" type="text"     placeholder="College ID"/>
+    <input id="s-email"   class="login-input" type="email"    placeholder="Email Address"/>
+    <input id="s-phone"   class="login-input" type="tel"      placeholder="Phone Number"/>
+    <input id="s-dept"    class="login-input" type="text"     placeholder="Department (e.g. Computer Science)"/>
+    <div style="position:relative;">
+  <input id="s-pass" class="login-input" type="password" placeholder="Create Password" style="padding-right:2.5rem;"/>
+  <span onclick="togglePass('s-pass',this)" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);cursor:pointer;">👁️</span>
+  <span onclick="togglePass('s-pass',this)" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);cursor:pointer;font-size:1rem;">👁️</span>
+</div>
+    <input id="s-cpass"   class="login-input" type="password" placeholder="Confirm Password"/>
+
+    <button class="login-btn" onclick="doSignup()">Create Account 🎓</button>
+
+    <p style="margin-top:1rem;font-size:0.85rem;color:#666;">
+      Already have account?
+      <span onclick="showLogin()" style="color:#c9a84c;cursor:pointer;font-weight:700;">Login here →</span>
+    </p>
+  </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="LS" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0f1f3d 0%,#1a3560 50%,#0d2137 100%);display:flex;align-items:center;justify-content:center;z-index:9999;">
+  <div class="login-card">
+    <img src="logo.png2.jpeg" alt="Campus साथी" style="height:80px;width:auto;margin-bottom:0.5rem;mix-blend-mode:screen;"/>
+    <p class="sub">Only for College Students & Professors</p>
+
+    <div id="LE" class="login-error">❌ Wrong ID or Password!</div>
+
+    <div class="role-btns">
+      <button id="bS" class="role-btn active-role" onclick="setRole('student')">🎒 Student</button>
+      <button id="bP" class="role-btn" onclick="setRole('professor')">👨‍🏫 Professor</button>
+    </div>
+
+    <input id="LI" class="login-input" type="text"     placeholder="College ID (e.g. STU2024001)"/>
+    <div style="position:relative;">
+  <input id="LP" class="login-input" type="password" placeholder="Password" style="padding-right:2.5rem;"/>
+  <span onclick="togglePass('LP',this)" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);cursor:pointer;">👁️</span>
+</div>
+
+    <button class="login-btn" onclick="doLogin()">Login →</button>
+
+    <p style="margin-top:1rem;font-size:0.85rem;color:#666;">
+      New student?
+      <span onclick="showSignup()" style="color:#c9a84c;cursor:pointer;font-weight:700;">Create Account →</span>
+    </p>
+
+    <div class="demo-box">
+      <strong>Demo Login:</strong><br/>
+      🎒 Student → <strong>STU2024001</strong> / <strong>student123</strong><br/>
+      👨‍🏫 Professor → <strong>PROF001</strong> / <strong>prof123</strong>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+  <img src="logo.png2.jpeg" alt="Campus साथी" style="height: 58px;width:auto;mix-blend-mode:screen;filter:brightness(1.5) contrast(1.2);"/>
+  <span style="font-family:'Playfair Display',serif;font-size:1.6rem;color:white;margin-left:0.6rem;"><span style="color:#c9a84c;">Campus</span> साथी</span>
+</div>
+  <div class="header-right">
+    <div class="welcome-text" id="WM" onclick="showProfile()" style="cursor:pointer;">Welcome 👋</div>
+    <button onclick="toggleSearch()" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:white;padding:0.4rem 1rem;border-radius:20px;cursor:pointer;font-size:0.82rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;">🔍 Search</button>
+    <div class="mode-btns">
+  <button class="mode-btn active-mode" id="mDefault" onclick="setMode('default')" title="Default">🌐</button>
+  <button class="mode-btn" id="mDay" onclick="setMode('day')" title="Day Mode">☀️</button>
+  <button class="mode-btn" id="mNight" onclick="setMode('night')" title="Night Mode">🌙</button>
+</div>
+    <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <button class="tab active" onclick="showTab('rideshare',this)">🚗 Ride Share</button>
+  <button class="tab" onclick="showTab('notices',this)">📢 Notices</button>
+  <button class="tab" onclick="showTab('timetable',this)">📅 Timetable</button>
+  <button class="tab" onclick="showTab('resources',this)">📚 Resources</button>
+  <button class="tab" onclick="showTab('lostandfound',this)">🔍 Lost & Found</button>
+  <button class="tab" onclick="showTab('events',this)">🎉 Events</button>
+</nav>
+
+<!-- SEARCH BAR -->
+<div id="searchBar" style="background:rgba(15,31,61,0.95);padding:0.75rem 2rem;display:none;position:sticky;top:116px;z-index:98;backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,0.2);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0.75rem;">
+    <span style="font-size:1.1rem;">🔍</span>
+    <input id="searchInput" type="text" placeholder="Search rides, notices, resources, events..." 
+      oninput="doSearch(this.value)"
+      style="flex:1;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:25px;padding:0.6rem 1.2rem;color:white;font-size:0.88rem;outline:none;font-family:'Plus Jakarta Sans',sans-serif;"/>
+    <button onclick="closeSearch()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:0.9rem;">✕</button>
+  </div>
+  <!-- Search Results -->
+  <div id="searchResults" style="max-width:1100px;margin:0.75rem auto 0;display:none;">
+    <div id="searchList" style="display:flex;flex-direction:column;gap:0.5rem;max-height:300px;overflow-y:auto;"></div>
+  </div>
+</div>
+
+<!-- RIDE SHARE -->
+<section id="rideshare" class="section active">
+  <div class="section-hero">
+    <div class="hero-hills"></div>
+    <span class="hero-cloud" style="animation-delay:0s;">☁️</span>
+    <span class="hero-cloud" style="animation-delay:4s;top:35px;font-size:1.8rem;">☁️</span>
+    <div class="hero-content">
+      <h1>🚗 Ride Share</h1>
+      <p>✨ "Sharing a ride, Sharing a smile"</p>
+    </div>
+  </div>
+  <div class="content-area">
+    <!-- RIDE SEARCH BOX -->
+<div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;">
+  <h3 style="color:white;font-size:1rem;margin-bottom:1rem;">🔍 Find a Ride</h3>
+  <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+    <input id="searchFrom" type="text" placeholder="📍 From (e.g. College Gate)" style="flex:1;min-width:180px;padding:0.75rem 1rem;border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.08);color:white;font-size:0.88rem;outline:none;font-family:'Plus Jakarta Sans',sans-serif;"/>
+    <input id="searchTo" type="text" placeholder="🏁 To (e.g. Railway Station)" style="flex:1;min-width:180px;padding:0.75rem 1rem;border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.08);color:white;font-size:0.88rem;outline:none;font-family:'Plus Jakarta Sans',sans-serif;"/>
+    <button onclick="searchRide()" class="btn btn-gold">Search 🔍</button>
+  </div>
+  <div id="rideSearchResult" style="margin-top:1rem;display:none;"></div>
+</div>
+    <div class="section-title-bar">
+      <h2>Available Rides</h2>
+      <button class="btn btn-gold" onclick="document.getElementById('RM').classList.add('open')">+ Post My Ride</button>
+      <button class="btn" onclick="requestPermissions()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);">🔐 Permissions</button>
+    </div>
+    <div id="RL">
+      <div class="ride-card">
+        <div class="ride-avatar">R</div>
+        <div class="ride-info">
+          <h3>Rahul Sharma &nbsp;<span class="badge blue">Student</span></h3>
+          <p>📍 From: College Gate → 🏁 To: Railway Station</p>
+          <div class="ride-meta">🕒 Today, 5:00 PM | 2 seats available</div>
+          <div class="ride-actions">
+            <button class="btn-sm btn-ride" onclick="joinRide(this)">🚗 Join Ride</button>
+            <button class="btn-sm btn-msg" onclick="openMsg('Rahul Sharma')">💬 Message</button>
+         <button class="btn-sm btn-call" onclick="callRider('Rahul Sharma','9876543210')">📞 Call</button>
+          </div>
+        </div>
+      </div>
+      <div class="ride-card">
+        <div class="ride-avatar" style="background:linear-gradient(135deg,#1e3a5f,#2d5a8f);">P</div>
+        <div class="ride-info">
+          <h3>Prof. Priya Mehta &nbsp;<span class="badge gold">Professor</span></h3>
+          <p>📍 From: College Gate → 🏁 To: City Mall</p>
+          <div class="ride-meta">🕒 Today, 6:30 PM | 1 seat available</div>
+          <div class="ride-actions">
+            <button class="btn-sm btn-ride" onclick="joinRide(this)">🚗 Join Ride</button>
+            <button class="btn-sm btn-msg" onclick="openMsg('Prof. Priya Mehta')">💬 Message</button>
+          <button class="btn-sm btn-call" onclick="callRider('Prof. Priya Mehta','9876543212')">📞 Call</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTICES -->
+<section id="notices" class="section">
+  <div class="section-hero">
+    <span class="hero-pins">📌 📌 📌</span>
+    <div class="hero-content">
+      <h1>📢 Notice Board</h1>
+      <p>📌 "Stay informed, stay ahead — knowledge is power"</p>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="section-title-bar"><h2>Latest Notices</h2></div>
+    <div class="notice-card urgent">
+      <span class="badge red">Urgent</span>
+      <h3>Exam Schedule Released</h3>
+      <p>Semester exams start from 20th March. Check portal for details.</p>
+      <small>📅 Posted: 5 March 2026</small>
+    </div>
+    <div class="notice-card">
+      <span class="badge blue">General</span>
+      <h3>Library Timing Change</h3>
+      <p>Library will now close at 8 PM instead of 6 PM.</p>
+      <small>📅 Posted: 3 March 2026</small>
+    </div>
+    <div class="notice-card">
+      <span class="badge green">Event</span>
+      <h3>Annual Sports Day Registration</h3>
+      <p>Register for sports day events before 15th March.</p>
+      <small>📅 Posted: 1 March 2026</small>
+    </div>
+  </div>
+</section>
+
+<!-- TIMETABLE -->
+<section id="timetable" class="section">
+  <div class="section-hero">
+    <div class="hero-stars">
+      <span style="position:absolute;color:white;opacity:0.6;top:10%;left:10%;font-size:0.5rem;">★</span>
+      <span style="position:absolute;color:white;opacity:0.4;top:20%;left:30%;font-size:0.4rem;">★</span>
+      <span style="position:absolute;color:white;opacity:0.7;top:15%;left:60%;font-size:0.6rem;">★</span>
+      <span style="position:absolute;color:white;opacity:0.5;top:30%;left:80%;font-size:0.4rem;">★</span>
+    </div>
+    <div class="hero-content">
+      <h1>📅 My Timetable</h1>
+      <p>⏰ "Time is the most valuable thing — use it wisely"</p>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="section-title-bar">
+      <h2>My Weekly Schedule</h2>
+      <button class="btn btn-gold" onclick="document.getElementById('TTModal').classList.add('open')">+ Add Class</button>
+    </div>
+
+    <!-- TODAY HIGHLIGHT -->
+    <div id="todayBanner" style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:12px;padding:0.75rem 1.2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;">
+      <span style="font-size:1.3rem;">📅</span>
+      <div>
+        <div style="color:#c9a84c;font-weight:700;font-size:0.88rem;" id="todayText">Today: Loading...</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;" id="todayClasses">Loading classes...</div>
+      </div>
+    </div>
+
+    <!-- TIMETABLE -->
+    <div class="table-wrapper">
+      <table id="ttTable">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th id="th-mon">Monday</th>
+            <th id="th-tue">Tuesday</th>
+            <th id="th-wed">Wednesday</th>
+            <th id="th-thu">Thursday</th>
+            <th id="th-fri">Friday</th>
+            <th id="th-sat">Saturday</th>
+          </tr>
+        </thead>
+        <tbody id="ttBody">
+          <!-- Filled by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LEGEND -->
+    <div style="margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+      <span style="color:rgba(255,255,255,0.4);font-size:0.78rem;">Color Legend:</span>
+      <span class="tt-chip" style="background:rgba(52,152,219,0.3);color:#5dade2;">Lecture</span>
+      <span class="tt-chip" style="background:rgba(46,204,113,0.3);color:#2ecc71;">Lab</span>
+      <span class="tt-chip" style="background:rgba(155,89,182,0.3);color:#bb8fce;">Tutorial</span>
+      <span class="tt-chip" style="background:rgba(243,156,18,0.3);color:#f0b27a;">Seminar</span>
+      <span class="tt-chip" style="background:rgba(231,76,60,0.2);color:#e74c3c;">Break/Free</span>
+    </div>
+  </div>
+</section>
+
+<!-- ADD CLASS MODAL -->
+<div class="modal-overlay" id="TTModal">
+  <div class="modal-box" style="max-width:460px;">
+    <h3>📅 Add Class to Timetable</h3>
+    <div class="fg">
+      <label>Time Slot</label>
+      <select id="ttTime">
+        <option>9:00 AM – 10:00 AM</option>
+        <option>10:00 AM – 11:00 AM</option>
+        <option>11:00 AM – 12:00 PM</option>
+        <option>12:00 PM – 1:00 PM</option>
+        <option>1:00 PM – 2:00 PM (Lunch)</option>
+        <option>2:00 PM – 3:00 PM</option>
+        <option>3:00 PM – 4:00 PM</option>
+        <option>4:00 PM – 5:00 PM</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Day</label>
+      <select id="ttDay">
+        <option value="0">Monday</option>
+        <option value="1">Tuesday</option>
+        <option value="2">Wednesday</option>
+        <option value="3">Thursday</option>
+        <option value="4">Friday</option>
+        <option value="5">Saturday</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Subject</label>
+      <input type="text" id="ttSubject" placeholder="e.g. DBMS, Math, Physics Lab"/>
+    </div>
+    <div class="fg">
+      <label>Type</label>
+      <select id="ttType">
+        <option value="lecture">📘 Lecture</option>
+        <option value="lab">🔬 Lab</option>
+        <option value="tutorial">📝 Tutorial</option>
+        <option value="seminar">🎤 Seminar</option>
+        <option value="free">☕ Break/Free</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Room / Location (optional)</label>
+      <input type="text" id="ttRoom" placeholder="e.g. Room 201, CS Lab"/>
+    </div>
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="document.getElementById('TTModal').classList.remove('open')">Cancel</button>
+      <button class="btn btn-gold" onclick="addTTClass()">Add Class ✅</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESOURCES -->
+<section id="resources" class="section">
+  <div class="section-hero">
+    <div class="hero-books">
+      <div class="book" style="height:90px;background:#e74c3c;"></div>
+      <div class="book" style="height:70px;background:#3498db;"></div>
+      <div class="book" style="height:110px;background:#2ecc71;"></div>
+      <div class="book" style="height:80px;background:#f39c12;"></div>
+      <div class="book" style="height:95px;background:#9b59b6;"></div>
+      <div class="book" style="height:75px;background:#1abc9c;"></div>
+      <div class="book" style="height:100px;background:#e67e22;"></div>
+    </div>
+    <div class="hero-content">
+      <h1>📚 Study Resources</h1>
+      <p>📖 "An investment in knowledge always pays the best interest"</p>
+    </div>
+  </div>
+  <div class="content-area">
+
+    <!-- TOP BAR -->
+    <div class="section-title-bar">
+      <h2>Study Materials</h2>
+      <button class="btn btn-gold" onclick="openPostResource()">+ Post Resource</button>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div style="display:flex;gap:0.5rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+      <button class="res-cat-btn active-cat" onclick="setResCat('all',this)">📚 All</button>
+      <button class="res-cat-btn" onclick="setResCat('plus2',this)">🎓 +2 (11th/12th)</button>
+      <button class="res-cat-btn" onclick="setResCat('plus3',this)">🏛️ +3 (Degree)</button>
+    </div>
+
+    <!-- +2 FILTERS -->
+    <div id="plus2-filters" style="display:none;margin-bottom:1rem;">
+      <div style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-bottom:0.5rem;">Stream:</div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="res-sub-btn active-sub" onclick="setResStream('all',this,'plus2')">All</button>
+        <button class="res-sub-btn" onclick="setResStream('science',this,'plus2')">🔬 Science</button>
+        <button class="res-sub-btn" onclick="setResStream('commerce',this,'plus2')">💼 Commerce</button>
+        <button class="res-sub-btn" onclick="setResStream('arts',this,'plus2')">🎨 Arts</button>
+      </div>
+      <!-- Science subjects -->
+      <div id="plus2-science-subs" style="display:none;margin-top:0.5rem;">
+        <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-bottom:0.4rem;">Subject:</div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <button class="res-sub-btn" onclick="setResSub('physics',this)">⚛️ Physics</button>
+          <button class="res-sub-btn" onclick="setResSub('chemistry',this)">🧪 Chemistry</button>
+          <button class="res-sub-btn" onclick="setResSub('math',this)">📐 Mathematics</button>
+          <button class="res-sub-btn" onclick="setResSub('biology',this)">🧬 Biology</button>
+        </div>
+      </div>
+      <!-- Commerce subjects -->
+      <div id="plus2-commerce-subs" style="display:none;margin-top:0.5rem;">
+        <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-bottom:0.4rem;">Subject:</div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <button class="res-sub-btn" onclick="setResSub('accounts',this)">📊 Accounts</button>
+          <button class="res-sub-btn" onclick="setResSub('business',this)">🏢 Business Studies</button>
+          <button class="res-sub-btn" onclick="setResSub('economics',this)">💹 Economics</button>
+        </div>
+      </div>
+      <!-- Arts subjects -->
+      <div id="plus2-arts-subs" style="display:none;margin-top:0.5rem;">
+        <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-bottom:0.4rem;">Subject:</div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <button class="res-sub-btn" onclick="setResSub('history',this)">📜 History</button>
+          <button class="res-sub-btn" onclick="setResSub('polsci',this)">🏛️ Political Science</button>
+          <button class="res-sub-btn" onclick="setResSub('geography',this)">🌍 Geography</button>
+          <button class="res-sub-btn" onclick="setResSub('sociology',this)">👥 Sociology</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- +3 FILTERS -->
+    <div id="plus3-filters" style="display:none;margin-bottom:1rem;">
+      <div style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-bottom:0.5rem;">Stream:</div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="res-sub-btn active-sub" onclick="setResStream('all',this,'plus3')">All</button>
+        <button class="res-sub-btn" onclick="setResStream('bsc',this,'plus3')">🔬 B.Sc Science</button>
+        <button class="res-sub-btn" onclick="setResStream('bcom',this,'plus3')">💼 B.Com</button>
+        <button class="res-sub-btn" onclick="setResStream('ba',this,'plus3')">🎨 B.A Arts</button>
+        <button class="res-sub-btn" onclick="setResStream('bca',this,'plus3')">💻 BCA</button>
+      </div>
+    </div>
+
+    <!-- CONTENT TYPE FILTER -->
+    <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <button class="res-type-btn active-type" onclick="setResType('all',this)">📦 All Types</button>
+      <button class="res-type-btn" onclick="setResType('notes',this)">📄 Notes</button>
+      <button class="res-type-btn" onclick="setResType('pyq',this)">📝 PYQ</button>
+      <button class="res-type-btn" onclick="setResType('syllabus',this)">📋 Syllabus</button>
+      <button class="res-type-btn" onclick="setResType('book',this)">📚 Books</button>
+      <button class="res-type-btn" onclick="setResType('sale',this)">💰 For Sale</button>
+    </div>
+
+    <!-- RESOURCES LIST -->
+    <div id="resourcesList" class="cards-grid">
+
+      <!-- Sample Resource 1 -->
+      <div class="res-card" data-cat="plus2" data-stream="science" data-type="notes" data-id="r1" data-poster="ADMIN">
+        <div class="res-card-top">
+          <span class="res-badge notes-badge">📄 Notes</span>
+          <span class="res-badge cat-badge">+2 Science</span>
+        </div>
+        <h3 class="res-title">Physics Notes - Unit 1</h3>
+        <p class="res-desc">Laws of Motion, Kinematics, Newton's Laws</p>
+        <div class="res-subject">⚛️ Physics | 11th/12th</div>
+        <div class="res-actions-bar">
+          <button class="res-action-btn like-btn" onclick="likeResource('r1',this)">👍 <span>12</span></button>
+          <button class="res-action-btn dislike-btn" onclick="dislikeResource('r1',this)">👎 <span>2</span></button>
+          <button class="res-action-btn" onclick="rateResource('r1')">⭐ <span id="rating-r1">8.5</span>/10</button>
+          <button class="res-action-btn report-btn" onclick="reportResource('r1')">🚩</button>
+        </div>
+        <div class="res-footer">
+          <small>👤 Admin | 📅 1 Mar 2026</small>
+          <a href="#" class="btn" style="padding:0.3rem 0.8rem;font-size:0.78rem;">⬇️ Download</a>
+        </div>
+      </div>
+
+      <!-- Sample Resource 2 -->
+      <div class="res-card" data-cat="plus2" data-stream="science" data-type="pyq" data-id="r2" data-poster="ADMIN">
+        <div class="res-card-top">
+          <span class="res-badge pyq-badge">📝 PYQ</span>
+          <span class="res-badge cat-badge">+2 Science</span>
+        </div>
+        <h3 class="res-title">Chemistry PYQ 2023</h3>
+        <p class="res-desc">Previous Year Question Paper with Solutions</p>
+        <div class="res-subject">🧪 Chemistry | 12th</div>
+        <div class="res-actions-bar">
+          <button class="res-action-btn like-btn" onclick="likeResource('r2',this)">👍 <span>8</span></button>
+          <button class="res-action-btn dislike-btn" onclick="dislikeResource('r2',this)">👎 <span>1</span></button>
+          <button class="res-action-btn" onclick="rateResource('r2')">⭐ <span id="rating-r2">9.0</span>/10</button>
+          <button class="res-action-btn report-btn" onclick="reportResource('r2')">🚩</button>
+        </div>
+        <div class="res-footer">
+          <small>👤 Admin | 📅 5 Mar 2026</small>
+          <a href="#" class="btn" style="padding:0.3rem 0.8rem;font-size:0.78rem;">⬇️ Download</a>
+        </div>
+      </div>
+
+      <!-- Sample Resource 3 — For Sale -->
+      <div class="res-card" data-cat="plus3" data-stream="bca" data-type="sale" data-id="r3" data-poster="STU2024001">
+        <div class="res-card-top">
+          <span class="res-badge sale-badge">💰 For Sale</span>
+          <span class="res-badge cat-badge">+3 BCA</span>
+        </div>
+        <h3 class="res-title">DBMS Textbook</h3>
+        <p class="res-desc">Database Management Systems by Navathe. Good condition.</p>
+        <div class="res-subject">💻 BCA | 2nd Year</div>
+        <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:0.6rem;margin:0.5rem 0;font-size:0.8rem;">
+          <div style="color:#c9a84c;font-weight:600;">💰 Price: ₹250</div>
+          <div style="color:rgba(255,255,255,0.6);margin-top:0.2rem;">📞 Contact: 9876543210</div>
+        </div>
+        <div class="res-actions-bar">
+          <button class="res-action-btn like-btn" onclick="likeResource('r3',this)">👍 <span>5</span></button>
+          <button class="res-action-btn dislike-btn" onclick="dislikeResource('r3',this)">👎 <span>0</span></button>
+          <button class="res-action-btn" onclick="rateResource('r3')">⭐ <span id="rating-r3">7.5</span>/10</button>
+          <button class="res-action-btn report-btn" onclick="reportResource('r3')">🚩</button>
+        </div>
+        <div class="res-footer">
+          <small>👤 BISHWA | 📅 10 Mar 2026</small>
+          <button class="btn btn-gold" style="padding:0.3rem 0.8rem;font-size:0.78rem;" onclick="contactSeller('9876543210','BISHWA')">📞 Contact</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- POST RESOURCE MODAL -->
+<div class="modal-overlay" id="ResModal">
+  <div class="modal-box" style="max-width:520px;max-height:90vh;overflow-y:auto;">
+    <h3>📚 Post Resource</h3>
+    <div class="fg">
+      <label>Title</label>
+      <input type="text" id="resTitle" placeholder="e.g. Physics Notes Unit 1"/>
+    </div>
+    <div class="fg">
+      <label>Description</label>
+      <textarea id="resDesc" placeholder="Describe the resource..." style="height:70px;resize:none;"></textarea>
+    </div>
+    <div class="fg">
+      <label>Category</label>
+      <select id="resCat" onchange="toggleSaleFields()">
+        <option value="plus2">+2 (11th/12th)</option>
+        <option value="plus3">+3 (Degree)</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Stream</label>
+      <select id="resStream">
+        <option value="science">Science</option>
+        <option value="commerce">Commerce</option>
+        <option value="arts">Arts</option>
+        <option value="bca">BCA</option>
+        <option value="bcom">B.Com</option>
+        <option value="bsc">B.Sc</option>
+        <option value="ba">B.A</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Subject</label>
+      <input type="text" id="resSubject" placeholder="e.g. Physics, Chemistry, DBMS"/>
+    </div>
+    <div class="fg">
+      <label>Type</label>
+      <select id="resType" onchange="toggleExtraFields()">
+        <option value="notes">📄 Notes</option>
+        <option value="pyq">📝 PYQ</option>
+        <option value="syllabus">📋 Syllabus</option>
+        <option value="book">📚 Book</option>
+        <option value="sale">💰 For Sale</option>
+      </select>
+    </div>
+
+    <!-- PYQ EXTRA FIELDS -->
+    <div id="pyqFields" style="display:none;background:rgba(155,89,182,0.1);border:1px solid rgba(155,89,182,0.3);border-radius:12px;padding:1rem;">
+      <p style="font-weight:600;color:#bb8fce;margin-bottom:0.75rem;font-size:0.88rem;">📝 PYQ Details</p>
+      <div class="fg">
+        <label>Exam Year</label>
+        <select id="pyqYear">
+          <option value="">Select Year</option>
+          <option>2024</option>
+          <option>2023</option>
+          <option>2022</option>
+          <option>2021</option>
+          <option>2020</option>
+          <option>2019</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Exam Type</label>
+        <select id="pyqExamType" onchange="togglePyqExam()">
+          <option value="">Select Exam</option>
+          <option value="plus2board">+2 Board Exam</option>
+          <option value="plus3univ">+3 University Exam</option>
+          <option value="other">Other Exam</option>
+        </select>
+      </div>
+      <!-- +2 Board -->
+      <div id="pyqBoardDiv" style="display:none;" class="fg">
+        <label>Board Name</label>
+        <select id="pyqBoard">
+          <option value="">Select Board</option>
+          <option>CBSE</option>
+          <option>ICSE</option>
+          <option>CHSE Odisha</option>
+          <option>WBCHSE (West Bengal)</option>
+          <option>BSEB (Bihar)</option>
+          <option>UP Board</option>
+          <option>RBSE (Rajasthan)</option>
+          <option>Other State Board</option>
+        </select>
+      </div>
+      <!-- +3 University -->
+      <div id="pyqUnivDiv" style="display:none;" class="fg">
+        <label>University Name</label>
+        <input type="text" id="pyqUniv" placeholder="e.g. Utkal University, BPUT, etc."/>
+      </div>
+      <!-- Other Exam -->
+      <div id="pyqOtherDiv" style="display:none;" class="fg">
+        <label>Exam Name (write yourself)</label>
+        <input type="text" id="pyqOther" placeholder="e.g. JEE Mains, NEET, GATE, etc."/>
+      </div>
+    </div>
+
+    <!-- SYLLABUS EXTRA FIELDS -->
+    <div id="syllabusFields" style="display:none;background:rgba(26,188,156,0.1);border:1px solid rgba(26,188,156,0.3);border-radius:12px;padding:1rem;">
+      <p style="font-weight:600;color:#48c9b0;margin-bottom:0.75rem;font-size:0.88rem;">📋 Syllabus Details</p>
+      <div class="fg">
+        <label>Syllabus For</label>
+        <select id="syllabusFor" onchange="toggleSyllabusFor()">
+          <option value="">Select</option>
+          <option value="plus2board">+2 Board</option>
+          <option value="plus3univ">+3 University</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div id="syllabusBoardDiv" style="display:none;" class="fg">
+        <label>Board Name</label>
+        <select id="syllabusBoard">
+          <option value="">Select Board</option>
+          <option>CBSE</option>
+          <option>ICSE</option>
+          <option>CHSE Odisha</option>
+          <option>WBCHSE (West Bengal)</option>
+          <option>BSEB (Bihar)</option>
+          <option>UP Board</option>
+          <option>RBSE (Rajasthan)</option>
+          <option>Other State Board</option>
+        </select>
+      </div>
+      <div id="syllabusUnivDiv" style="display:none;" class="fg">
+        <label>University Name</label>
+        <input type="text" id="syllabusUniv" placeholder="e.g. Utkal University, BPUT, etc."/>
+      </div>
+      <div id="syllabusOtherDiv" style="display:none;" class="fg">
+        <label>Institution / Exam Name</label>
+        <input type="text" id="syllabusOther" placeholder="e.g. UPSC, SSC, JEE, etc."/>
+      </div>
+      <div class="fg">
+        <label>Academic Year</label>
+        <input type="text" id="syllabusYear" placeholder="e.g. 2024-25"/>
+      </div>
+    </div>
+
+    <!-- SALE FIELDS -->
+    <div id="saleFields" style="display:none;background:#f7f9ff;border-radius:12px;padding:1rem;border:1px solid #e8ecf2;">
+      <p style="font-weight:600;color:#0f1f3d;margin-bottom:0.75rem;font-size:0.88rem;">💰 Sale Details</p>
+      <div class="fg"><label>Price (₹)</label><input type="number" id="resPrice" placeholder="e.g. 250"/></div>
+      <div class="fg"><label>Contact Number</label><input type="tel" id="resContact" placeholder="Your phone number"/></div>
+      <p style="font-size:0.78rem;color:#888;margin-bottom:0.5rem;">OR share payment details:</p>
+      <div class="fg"><label>Account Number</label><input type="text" id="resAccNo" placeholder="Optional"/></div>
+      <div class="fg"><label>IFSC Code</label><input type="text" id="resIFSC" placeholder="Optional"/></div>
+      <div class="fg"><label>Branch Name</label><input type="text" id="resBranch" placeholder="Optional"/></div>
+      <div class="fg"><label>UPI / QR Code ID</label><input type="text" id="resUPI" placeholder="e.g. name@upi (Optional)"/></div>
+    </div>
+
+    <div class="fg">
+      <label>Download Link (Google Drive / any link)</label>
+      <input type="text" id="resLink" placeholder="Paste link here (optional)"/>
+    </div>
+
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="document.getElementById('ResModal').classList.remove('open')">Cancel</button>
+      <button class="btn btn-gold" onclick="postResource()">Post Resource 📚</button>
+    </div>
+  </div>
+</div>
+
+<!-- RATING MODAL -->
+<div class="modal-overlay" id="RateModal">
+  <div class="modal-box" style="max-width:360px;text-align:center;">
+    <h3>⭐ Rate this Resource</h3>
+    <p style="color:#888;font-size:0.85rem;margin-bottom:1.2rem;">How helpful was this resource?</p>
+    <input type="hidden" id="ratingResId"/>
+    <div style="display:flex;justify-content:center;gap:0.4rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+      <script>
+        for(var i=1;i<=10;i++){
+          document.write('<button class="rate-num-btn" onclick="submitRating('+i+')">'+i+'</button>');
+        }
+      </script>
+    </div>
+    <button class="btn-cancel" onclick="document.getElementById('RateModal').classList.remove('open')">Cancel</button>
+  </div>
+</div>
+
+<!-- CONTACT SELLER MODAL -->
+<div class="modal-overlay" id="SellerModal">
+  <div class="modal-box" style="max-width:380px;text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:0.5rem;">📞</div>
+    <h3 style="margin-bottom:1rem;">Contact Seller</h3>
+    <div id="sellerDetails"></div>
+    <button class="btn-cancel" style="margin-top:1rem;width:100%;" onclick="document.getElementById('SellerModal').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<!-- LOST & FOUND -->
+<section id="lostandfound" class="section">
+  <div class="section-hero">
+    <div class="hero-content">
+      <h1>🔍 Lost & Found</h1>
+      <p>🤝 "One person's loss is another's chance to do good"</p>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="section-title-bar">
+      <h2>Posted Items</h2>
+      <button class="btn btn-gold" onclick="document.getElementById('LFM').classList.add('open')">+ Post Item</button>
+    </div>
+    <div class="cards-grid" id="LFL">
+      <div class="lf-card"><div class="lf-emoji">👜</div><div class="lf-body"><span class="badge red">Lost</span><h3>Black Backpack</h3><p>Lost near Library on 4th March.</p><small>📍 Library | Rahul S.</small></div></div>
+      <div class="lf-card"><div class="lf-emoji">🔑</div><div class="lf-body"><span class="badge green">Found</span><h3>Key Chain</h3><p>Found in Canteen. Red keychain.</p><small>📍 Canteen | Priya M.</small></div></div>
+      <div class="lf-card"><div class="lf-emoji">💧</div><div class="lf-body"><span class="badge red">Lost</span><h3>Water Bottle</h3><p>Blue bottle lost in CS lab.</p><small>📍 CS Lab | Arjun K.</small></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- EVENTS -->
+<section id="events" class="section">
+  <div class="section-hero">
+    <span class="confetti-item" style="left:10%;animation-delay:0s;">🎊</span>
+    <span class="confetti-item" style="left:30%;animation-delay:1s;">⭐</span>
+    <span class="confetti-item" style="left:55%;animation-delay:0.5s;">🎉</span>
+    <span class="confetti-item" style="left:75%;animation-delay:1.5s;">✨</span>
+    <div class="hero-content">
+      <h1>🎉 Events & Clubs</h1>
+      <p>🌟 "College life is not just studies — it's memories too"</p>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="section-title-bar">
+      <h2>Upcoming Events</h2>
+      <button class="btn btn-gold" onclick="document.getElementById('EventModal').classList.add('open')">+ Post Event</button>
+    </div>
+
+    <!-- EVENTS LIST -->
+    <div id="eventsList">
+
+      <!-- Event 1 -->
+      <div class="event-card-new" data-id="e1" data-poster="ADMIN">
+        <div class="event-left">
+          <div class="event-date">
+            <span class="day">20</span>
+            <span class="month">MAR</span>
+          </div>
+        </div>
+        <div class="event-right">
+          <div class="event-top-row">
+            <span class="badge blue">Tech Club</span>
+            <div class="event-owner-btns">
+              <button class="event-del-btn" onclick="deleteEvent('e1','ADMIN')">🗑️</button>
+            </div>
+          </div>
+          <h3 class="event-title">Hackathon 2026</h3>
+          <p class="event-desc">24-hour coding challenge. Teams of 3-4. Prizes worth ₹50,000!</p>
+          <div class="event-meta">📍 CS Block | 🕒 9:00 AM | 👥 Open for all</div>
+          <div class="event-btns-row">
+            <button class="ev-btn ev-like" onclick="eventReact('e1','like',this)">👍 Like <span>24</span></button>
+            <button class="ev-btn ev-interested" onclick="eventReact('e1','interested',this)">⭐ Interested <span>15</span></button>
+            <button class="ev-btn ev-share" onclick="shareEvent('Hackathon 2026')">🔗 Share</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 2 -->
+      <div class="event-card-new" data-id="e2" data-poster="ADMIN">
+        <div class="event-left">
+          <div class="event-date">
+            <span class="day">25</span>
+            <span class="month">MAR</span>
+          </div>
+        </div>
+        <div class="event-right">
+          <div class="event-top-row">
+            <span class="badge green">Sports Club</span>
+            <div class="event-owner-btns">
+              <button class="event-del-btn" onclick="deleteEvent('e2','ADMIN')">🗑️</button>
+            </div>
+          </div>
+          <h3 class="event-title">Annual Sports Day</h3>
+          <p class="event-desc">Cricket, Football, Athletics and more. Register by 15th March.</p>
+          <div class="event-meta">📍 Sports Ground | 🕒 8:00 AM | 👥 All Students</div>
+          <div class="event-btns-row">
+            <button class="ev-btn ev-like" onclick="eventReact('e2','like',this)">👍 Like <span>18</span></button>
+            <button class="ev-btn ev-interested" onclick="eventReact('e2','interested',this)">⭐ Interested <span>32</span></button>
+            <button class="ev-btn ev-share" onclick="shareEvent('Annual Sports Day')">🔗 Share</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 3 -->
+      <div class="event-card-new" data-id="e3" data-poster="ADMIN">
+        <div class="event-left">
+          <div class="event-date">
+            <span class="day">01</span>
+            <span class="month">APR</span>
+          </div>
+        </div>
+        <div class="event-right">
+          <div class="event-top-row">
+            <span class="badge gold">Cultural Club</span>
+            <div class="event-owner-btns">
+              <button class="event-del-btn" onclick="deleteEvent('e3','ADMIN')">🗑️</button>
+            </div>
+          </div>
+          <h3 class="event-title">Cultural Fest — Rang 2026</h3>
+          <p class="event-desc">Dance, music, drama competitions. Open for all students.</p>
+          <div class="event-meta">📍 Main Auditorium | 🕒 10:00 AM | 👥 All Students</div>
+          <div class="event-btns-row">
+            <button class="ev-btn ev-like" onclick="eventReact('e3','like',this)">👍 Like <span>41</span></button>
+            <button class="ev-btn ev-interested" onclick="eventReact('e3','interested',this)">⭐ Interested <span>56</span></button>
+            <button class="ev-btn ev-share" onclick="shareEvent('Cultural Fest - Rang 2026')">🔗 Share</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- POST EVENT MODAL -->
+<div class="modal-overlay" id="EventModal">
+  <div class="modal-box" style="max-width:500px;max-height:90vh;overflow-y:auto;">
+    <h3>🎉 Post New Event</h3>
+    <div class="fg"><label>Event Title</label><input type="text" id="evTitle" placeholder="e.g. Tech Fest 2026"/></div>
+    <div class="fg"><label>Description</label><textarea id="evDesc" placeholder="Describe the event..." style="height:80px;resize:none;"></textarea></div>
+    <div class="fg">
+      <label>Category / Club</label>
+      <select id="evClub" onchange="toggleEvOther()">
+        <option value="blue">💻 Tech Club</option>
+        <option value="green">⚽ Sports Club</option>
+        <option value="gold">🎭 Cultural Club</option>
+        <option value="red">📚 Academic Club</option>
+        <option value="blue">🎨 Arts Club</option>
+        <option value="other">✏️ Other</option>
+      </select>
+      <input type="text" id="evClubOther" placeholder="Write category name..." style="display:none;margin-top:0.5rem;width:100%;padding:0.7rem 1rem;border:1.5px solid #e8ecf2;border-radius:10px;font-size:0.88rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;"/>
+    </div>
+    <div style="display:flex;gap:0.75rem;">
+      <div class="fg" style="flex:1;">
+        <label>Date</label>
+        <input type="date" id="evDate"/>
+      </div>
+      <div class="fg" style="flex:1;">
+        <label>Time</label>
+        <input type="time" id="evTime"/>
+      </div>
+    </div>
+    <div class="fg"><label>Venue / Location</label><input type="text" id="evVenue" placeholder="e.g. CS Block, Main Auditorium"/></div>
+    <div class="fg"><label>Open For</label>
+      <select id="evOpen" onchange="toggleEvOpenOther()">
+        <option>All Students</option>
+        <option>Students Only</option>
+        <option>Professors Only</option>
+        <option>BCA Students</option>
+        <option>B.Sc Students</option>
+        <option>All College Members</option>
+        <option value="other">✏️ Other</option>
+      </select>
+      <input type="text" id="evOpenOther" placeholder="Write who can attend..." style="display:none;margin-top:0.5rem;width:100%;padding:0.7rem 1rem;border:1.5px solid #e8ecf2;border-radius:10px;font-size:0.88rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;"/>
+    </div>
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="document.getElementById('EventModal').classList.remove('open')">Cancel</button>
+      <button class="btn btn-gold" onclick="postEvent()">Post Event 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- PERMISSION MODAL -->
+<div class="modal-overlay" id="PM">
+  <div class="modal-box" style="max-width:400px;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:1rem;">🚗</div>
+    <h3 style="margin-bottom:0.5rem;">Access Required</h3>
+    <p style="font-size:0.85rem;color:#666;margin-bottom:1.5rem;">Campus साथी needs your permission for a better ride sharing experience</p>
+
+    <div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;gap:1rem;background:#f7f9ff;padding:0.9rem;border-radius:12px;text-align:left;">
+        <span style="font-size:1.5rem;">📍</span>
+        <div>
+          <div style="font-weight:600;font-size:0.88rem;color:#0f1f3d;">Location Access</div>
+          <div style="font-size:0.78rem;color:#888;">To show nearby rides and your position</div>
+        </div>
+        <button id="locBtn" onclick="requestLocation()" style="margin-left:auto;padding:0.35rem 0.8rem;border-radius:20px;border:none;background:#0f1f3d;color:white;font-size:0.75rem;cursor:pointer;font-weight:600;">Allow</button>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:1rem;background:#f7f9ff;padding:0.9rem;border-radius:12px;text-align:left;">
+        <span style="font-size:1.5rem;">🔔</span>
+        <div>
+          <div style="font-weight:600;font-size:0.88rem;color:#0f1f3d;">Notifications</div>
+          <div style="font-size:0.78rem;color:#888;">Get alerts when someone joins your ride</div>
+        </div>
+        <button id="notifBtn" onclick="requestNotification()" style="margin-left:auto;padding:0.35rem 0.8rem;border-radius:20px;border:none;background:#0f1f3d;color:white;font-size:0.75rem;cursor:pointer;font-weight:600;">Allow</button>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:1rem;background:#f7f9ff;padding:0.9rem;border-radius:12px;text-align:left;">
+        <span style="font-size:1.5rem;">📞</span>
+        <div>
+          <div style="font-weight:600;font-size:0.88rem;color:#0f1f3d;">Phone Call</div>
+          <div style="font-size:0.78rem;color:#888;">Directly call ride owner for coordination</div>
+        </div>
+        <span id="callStatus" style="margin-left:auto;font-size:0.75rem;color:#1a7a45;font-weight:600;">✅ Ready</span>
+      </div>
+    </div>
+
+    <button class="login-btn" onclick="document.getElementById('PM').classList.remove('open')" style="padding:0.7rem;">Done ✓</button>
+  </div>
+</div>
+
+<!-- CALL MODAL -->
+<div class="modal-overlay" id="CM">
+  <div class="modal-box" style="max-width:340px;text-align:center;">
+    <div style="font-size:3.5rem;margin-bottom:0.5rem;animation:pulse 1s infinite;">📞</div>
+    <h3 id="callName" style="margin-bottom:0.3rem;"></h3>
+    <p id="callNumber" style="color:#888;font-size:0.9rem;margin-bottom:1.5rem;"></p>
+    <div style="display:flex;gap:1rem;justify-content:center;">
+      <a id="callLink" href="#" style="text-decoration:none;">
+        <button style="background:#2ecc71;color:white;border:none;width:60px;height:60px;border-radius:50%;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 15px rgba(46,204,113,0.4);">📞</button>
+      </a>
+      <button onclick="document.getElementById('CM').classList.remove('open')" style="background:#e74c3c;color:white;border:none;width:60px;height:60px;border-radius:50%;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 15px rgba(231,76,60,0.4);">📵</button>
+    </div>
+    <p style="margin-top:1rem;font-size:0.75rem;color:#aaa;">🔒 Only verified campus members</p>
+  </div>
+</div>
+
+<!-- RIDE MODAL -->
+<div class="modal-overlay" id="RM">
+  <div class="modal-box">
+    <h3>🚗 Post Your Ride</h3>
+    <div class="fg"><label>Your Name</label><input type="text" id="rN" placeholder="e.g. Bishwa"/></div>
+    <div class="fg"><label>Role</label><select id="rR"><option>Student</option><option>Professor</option></select></div>
+    <div class="fg"><label>From</label><input type="text" id="rF" placeholder="e.g. College Gate"/></div>
+    <div class="fg"><label>To</label><input type="text" id="rT" placeholder="e.g. Railway Station"/></div>
+    <div class="fg"><label>Time</label><input type="text" id="rTm" placeholder="e.g. Today, 5:00 PM"/></div>
+    <div class="fg"><label>Seats</label><select id="rSt"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="document.getElementById('RM').classList.remove('open')">Cancel</button>
+      <button class="btn btn-gold" onclick="postRide()">Post Ride</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOST & FOUND MODAL -->
+<div class="modal-overlay" id="LFM">
+  <div class="modal-box">
+    <h3>🔍 Post Lost / Found Item</h3>
+    <div class="fg"><label>Your Name</label><input type="text" id="lfName" placeholder="e.g. Bishwa"/></div>
+    <div class="fg"><label>Status</label><select id="lfStatus"><option>Lost</option><option>Found</option></select></div>
+    <div class="fg"><label>Item Name</label><input type="text" id="lfItem" placeholder="e.g. Black Backpack"/></div>
+    <div class="fg"><label>Description</label><textarea id="lfDesc" placeholder="Describe the item..." style="height:80px;resize:none;"></textarea></div>
+    <div class="fg"><label>Location</label><input type="text" id="lfLoc" placeholder="e.g. Library Block"/></div>
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="document.getElementById('LFM').classList.remove('open')">Cancel</button>
+      <button class="btn btn-gold" onclick="postLF()">Post Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- MESSAGE MODAL -->
+<div class="modal-overlay" id="MM">
+  <div class="modal-box" style="max-width:420px;">
+    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+      <div id="MRAvatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e0b85c);color:#1a2840;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;"></div>
+      <h3 style="margin:0;color:white;">💬 <span id="MR"></span></h3>
+    </div>
+    <p style="font-size:0.78rem;color:#999;margin-bottom:0.75rem;">🔒 Only they can see this</p>
+    <div class="fg"><textarea id="MT" placeholder="Type your message..." style="height:110px;resize:none;"></textarea></div>
+    <div id="chatMessages" style="max-height:200px;overflow-y:auto;margin-bottom:0.75rem;display:flex;flex-direction:column;gap:0.5rem;"></div>
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="closeMsg()">Cancel</button>
+      <button class="btn btn-gold" onclick="sendMsg()">Send 📨</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+<!-- PROFILE PAGE -->
+<div id="ProfileModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,26,0.95);backdrop-filter:blur(10px);z-index:999;overflow-y:auto;">
+  <div style="max-width:700px;margin:2rem auto;padding:1.5rem;">
+
+    <!-- Close Button -->
+    <button onclick="closeProfile()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:0.5rem 1.2rem;border-radius:20px;cursor:pointer;font-size:0.85rem;font-weight:600;margin-bottom:1.5rem;font-family:'Plus Jakarta Sans',sans-serif;">← Back</button>
+
+    <!-- Profile Card -->
+    <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:2rem;margin-bottom:1.5rem;">
+
+      <!-- Avatar + Name -->
+      <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+        <div id="profileAvatar" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e0b85c);color:#1a2840;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;flex-shrink:0;"></div>
+        <div style="flex:1;">
+          <h2 id="profileName" style="color:white;font-family:'Playfair Display',serif;font-size:1.6rem;"></h2>
+          <div id="profileRole" style="margin-top:0.3rem;"></div>
+          <div id="profileCollege" style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin-top:0.3rem;"></div>
+        </div>
+        <button onclick="openEditProfile()" style="background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.3);color:#c9a84c;padding:0.5rem 1.2rem;border-radius:20px;cursor:pointer;font-size:0.82rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;">✏️ Edit</button>
+      </div>
+
+      <!-- Divider -->
+      <div style="border-bottom:1px solid rgba(255,255,255,0.08);margin:1.5rem 0;"></div>
+
+      <!-- Info Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+        <div class="profile-info-item">
+          <div class="profile-info-label">📧 Email</div>
+          <div class="profile-info-value" id="profileEmail">—</div>
+        </div>
+        <div class="profile-info-item">
+          <div class="profile-info-label">📞 Phone</div>
+          <div class="profile-info-value" id="profilePhone">—</div>
+        </div>
+        <div class="profile-info-item">
+          <div class="profile-info-label">🏛️ Department</div>
+          <div class="profile-info-value" id="profileDept">—</div>
+        </div>
+        <div class="profile-info-item">
+          <div class="profile-info-label">🎓 College ID</div>
+          <div class="profile-info-value" id="profileId">—</div>
+        </div>
+        <div class="profile-info-item">
+          <div class="profile-info-label">👤 Gender</div>
+          <div class="profile-info-value" id="profileGender">—</div>
+        </div>
+        <div class="profile-info-item">
+          <div class="profile-info-label">🏫 College</div>
+          <div class="profile-info-value" id="profileCollegeName">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:rgba(52,152,219,0.15);border:1px solid rgba(52,152,219,0.25);border-radius:14px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:700;color:#5dade2;" id="statRides">0</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.78rem;margin-top:0.3rem;">🚗 Rides Posted</div>
+      </div>
+      <div style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:700;color:#c9a84c;" id="statResources">0</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.78rem;margin-top:0.3rem;">📚 Resources Posted</div>
+      </div>
+      <div style="background:rgba(46,204,113,0.15);border:1px solid rgba(46,204,113,0.25);border-radius:14px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:700;color:#2ecc71;" id="statEvents">0</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.78rem;margin-top:0.3rem;">🎉 Events Posted</div>
+      </div>
+    </div>
+
+    <!-- My Posted Items -->
+    <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:1.5rem;margin-bottom:1.5rem;">
+      <h3 style="color:white;font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem;">📦 My Posted Items</h3>
+      <div id="myPostedItems">
+        <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;text-align:center;padding:1rem;">No items posted yet</p>
+      </div>
+    </div>
+
+    <!-- Change Password -->
+    <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:1.5rem;">
+      <h3 style="color:white;font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem;">🔒 Change Password</h3>
+      <div class="fg"><label style="color:rgba(255,255,255,0.7);">Current Password</label><input type="password" id="cpOld" class="login-input" style="margin-bottom:0;" placeholder="Enter current password"/></div>
+      <div class="fg" style="margin-top:0.75rem;"><label style="color:rgba(255,255,255,0.7);">New Password</label><input type="password" id="cpNew" class="login-input" style="margin-bottom:0;" placeholder="Enter new password"/></div>
+      <div class="fg" style="margin-top:0.75rem;"><label style="color:rgba(255,255,255,0.7);">Confirm New Password</label><input type="password" id="cpConfirm" class="login-input" style="margin-bottom:0;" placeholder="Confirm new password"/></div>
+      <button onclick="changePassword()" class="btn btn-gold" style="margin-top:1rem;width:100%;">Update Password 🔒</button>
+      <div id="cpMsg" style="display:none;margin-top:0.75rem;padding:0.6rem;border-radius:8px;font-size:0.85rem;text-align:center;"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal-overlay" id="EditProfileModal" style="z-index:9999;">
+  <div class="modal-box" style="max-width:460px;max-height:90vh;overflow-y:auto;">
+    <h3>✏️ Edit Profile</h3>
+    <div class="fg"><label>Full Name</label><input type="text" id="ep-name" placeholder="Full Name"/></div>
+    <div class="fg"><label>Email</label><input type="email" id="ep-email" placeholder="Email Address"/></div>
+    <div class="fg"><label>Phone</label><input type="tel" id="ep-phone" placeholder="Phone Number"/></div>
+    <div class="fg"><label>Department</label><input type="text" id="ep-dept" placeholder="Department"/></div>
+    <div class="fg"><label>College Name</label><input type="text" id="ep-college" placeholder="College Name"/></div>
+    <div class="fg">
+      <label>Gender</label>
+      <select id="ep-gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="mfooter">
+      <button class="btn-cancel" onclick="document.getElementById('EditProfileModal').classList.remove('open')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveProfile()">Save Changes ✅</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
