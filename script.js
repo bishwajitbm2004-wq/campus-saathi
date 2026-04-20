@@ -32,6 +32,7 @@ function doLogin() {
       document.getElementById('WM').innerText = 'Welcome, ' + data.name + ' 👋';
       err.style.display = 'none';
       loadTimetable();
+      loadRides()
     }
   });
 }
@@ -120,9 +121,38 @@ function doSignup() {
     }
   });
 }
-
+// ===== FETCH DATA FROM BACKEND =====
+function loadRides() {
+  fetch('https://campus-saathi-bdzx.onrender.com/api/rides')
+  .then(r => r.json())
+  .then(data => {
+    var rl = document.getElementById('RL');
+    if(data.length > 0) {
+      rl.innerHTML = '';
+      data.forEach(function(ride) {
+        var c = ride.role === 'Professor' ? 'gold' : 'blue';
+        var card = document.createElement('div');
+        card.className = 'ride-card';
+        card.innerHTML =
+          '<div class="ride-avatar">'+ride.name[0].toUpperCase()+'</div>' +
+          '<div class="ride-info">' +
+            '<h3>'+ride.name+' <span class="badge '+c+'">'+ride.role+'</span></h3>' +
+            '<p>📍 From: '+ride.from+' → 🏁 To: '+ride.to+'</p>' +
+            '<div class="ride-meta">🕒 '+ride.time+' | '+ride.seats+' seat(s)</div>' +
+            '<div class="ride-actions">' +
+              '<button class="btn-sm btn-ride" onclick="joinRide(this)">🚗 Join Ride</button>' +
+              '<button class="btn-sm btn-msg" onclick="openMsg(\''+ride.name+'\')">💬 Message</button>' +
+              '<button class="btn-sm btn-call" onclick="callRider(\''+ride.name+'\',\''+ride.phone+'\')">📞 Call</button>' +
+            '</div>' +
+          '</div>';
+        rl.appendChild(card);
+      });
+    }
+  });
+}
 // ===== TABS =====
 function showTab(name, btn) {
+
   document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
   document.getElementById(name).classList.add('active');
