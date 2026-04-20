@@ -18,7 +18,7 @@ function doLogin() {
   var id = document.getElementById('LI').value.trim();
   var pass = document.getElementById('LP').value.trim();
   var err = document.getElementById('LE');
-  fetch('http://127.0.0.1:5000/api/login', {
+  fetch('https://campus-saathi-bdzx.onrender.com/api/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({college_id: id, password: pass, role: role})
@@ -99,7 +99,7 @@ function doSignup() {
     return;
   }
 
-  fetch('http://127.0.0.1:5000/api/signup', {
+  fetch('https://campus-saathi-bdzx.onrender.com/api/signup', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({name,gender,college,college_id:id,email,phone,dept,password:pass,role:signupRole})
