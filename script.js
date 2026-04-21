@@ -31,6 +31,7 @@ function doLogin() {
       document.getElementById('LS').style.display = 'none';
       document.getElementById('WM').innerText = 'Welcome, ' + data.name + ' 👋';
       err.style.display = 'none';
+     currentUserData = data;
       loadTimetable();
       loadRides()
     }
@@ -359,6 +360,7 @@ createStars();
 
 // ===== PROFILE =====
 var currentUserId = '';
+var currentUserData = null;
 
 function showProfile() {
   currentUserId = document.getElementById('LI').value.trim();
@@ -433,7 +435,7 @@ function closeProfile() {
 }
 
 function openEditProfile() {
-  var user = users[currentUserId];
+  var user = currentUserData || users[currentUserId];
   if(!user) return;
 
   // Profile content hide karo
