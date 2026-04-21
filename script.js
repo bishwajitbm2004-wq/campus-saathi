@@ -213,35 +213,59 @@ function cancelRide(joinBtn, cancelBtn) {
 }
 
 function postRide() {
-  var n  = document.getElementById('rN').value;
+  var n  = document.getElementById('rN').value.trim();
   var r  = document.getElementById('rR').value;
-  var f  = document.getElementById('rF').value;
-  var t  = document.getElementById('rT').value;
-  var tm = document.getElementById('rTm').value;
+  var f  = document.getElementById('rF').value.trim();
+  var t  = document.getElementById('rT').value.trim();
+  var tm = document.getElementById('rTm').value.trim();
   var s  = document.getElementById('rSt').value;
-  if(!n||!f||!t||!tm){ alert('Please fill all fields!'); return; }
-  var c = r==='Professor' ? 'gold' : 'blue';
-  var card = document.createElement('div');
-  card.className = 'ride-card';
-  card.innerHTML =
-    '<div class="ride-avatar">'+n[0].toUpperCase()+'</div>' +
-    '<div class="ride-info">' +
-      '<h3>'+n+' &nbsp;<span class="badge '+c+'">'+r+'</span></h3>' +
-      '<p>📍 From: '+f+' → 🏁 To: '+t+'</p>' +
-      '<div class="ride-meta">🕒 '+tm+' | '+s+' seat(s)</div>' +
-      '<div class="ride-actions">' +
-        '<button class="btn-sm btn-ride" onclick="joinRide(this)">🚗 Join Ride</button>' +
-        '<button class="btn-sm btn-msg" onclick="openMsg(\''+n+'\')">💬 Message</button>' +
-      '</div>' +
-    '</div>';
-  document.getElementById('RL').prepend(card);
-  document.getElementById('RM').classList.remove('open');
-  document.getElementById('rN').value='';
-  document.getElementById('rF').value='';
-  document.getElementById('rT').value='';
-  document.getElementById('rTm').value='';
-  checkWaitingPassengers(f, t);
-  alert('✅ Ride posted!');
+  
+  if(!n||!f||!t||!tm){ 
+    alert('Please fill all fields!'); 
+    return; 
+  }
+
+  // Get current user phone
+  var currentId = document.getElementById('LI').value.trim();
+  var userPhone = users[currentId] ? users[currentId].phone : '9876543210';
+
+  // ✅ BACKEND KO BHEJ - MONGODB MEIN SAVE HOGA
+  fetch('https://campus-saathi-bdzx.onrender.com/api/rides', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      name: n,
+      role: r,
+      from: f,
+      to: t,
+      time: tm,
+      seats: s,
+      phone: userPhone
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if(data.message || data.success) {
+      // ✅ SUCCESS - AB RIDES RELOAD KAR
+      loadRides();
+      document.getElementById('RM').classList.remove('open');
+      
+      // Form clear kar
+      document.getElementById('rN').value='';
+      document.getElementById('rF').value='';
+      document.getElementById('rT').value='';
+      document.getElementById('rTm').value='';
+      
+      checkWaitingPassengers(f, t);
+      alert('✅ Ride posted successfully!');
+    } else {
+      alert('❌ Error: ' + (data.error || 'Unknown error'));
+    }
+  })
+  .catch(err => {
+    console.error('Error:', err);
+    alert('❌ Error posting ride. Check console!');
+  });
 }
 
 // ===== LOST & FOUND =====
